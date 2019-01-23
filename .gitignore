@@ -102,3 +102,17 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+flask_session/*
+*/.ipynb_checkpoints/*
+
+#
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+data/*
+img/*
+log/*
+.httr-oauth

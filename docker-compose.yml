@@ -1,0 +1,35 @@
+version: '3.5'
+services:
+  nginx:
+      image: nginx:1.9
+      ports:
+      - "80:80"
+      volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      restart: always
+      depends_on:
+      - pnews
+      networks: 
+        - selenium-hub
+  pnews: 
+    image: aabor/pnews
+    build: 
+      context: pnews/.
+    ports:
+      - 5000:5000
+    volumes:
+      - /home/$USER/Documents/Trading/fh_data-dev:/home/jovyan/work/R/fh/data
+      - /home/$USER/Dropbox/mt4/data-dev:/home/jovyan/work/R/fh/data/mt4
+      - /home/$USER/Documents/Trading/news-arch:/home/jovyan/fh/data/news-arch
+      - /home/$USER/.ssh:/home/jovyan/.ssh/  
+      - /home/$USER/.secrets:/home/jovyan/.secrets/  
+      - /home/$USER/.httr-oauth:/home/jovyan/.httr-oauth
+    restart: "on-failure:30"
+    environment:
+      - TZ="Europe/Kiev"
+      - GIT_VERSION=$GIT_VERSION
+    networks: 
+      - selenium-hub
+networks:
+  selenium-hub:
+    external: true

@@ -1,0 +1,32 @@
+# aabor/news
+ARG GIT_VERSION=unspecified
+
+FROM aabor/rbase-finance:latest
+
+ARG GIT_VERSION
+LABEL version=${GIT_VERSION}
+
+RUN echo ${GIT_VERSION}
+
+RUN mkdir /home/jovyan/work/py/ \
+    && mkdir /home/jovyan/work/py/news-service \
+    && mkdir /home/jovyan/work/py/news-service/pnews
+WORKDIR /home/jovyan/work/py/news-service
+COPY . ./pnews
+
+USER root
+RUN addgroup jovyan && \
+    chown -R jovyan:jovyan .
+
+USER jovyan
+
+
+RUN jupyter nbconvert --to python pnews/pnews.ipynb
+
+
+EXPOSE 9000
+
+ENTRYPOINT ["python"]
+CMD ["-u", "./pnews/pnews.py"] # -u stands for unbuffered, print output in console
+
+ 
