@@ -1,4 +1,4 @@
-# aabor/news
+# aabor/fh
 ARG GIT_VERSION=unspecified
 
 FROM aabor/rbase-finance:latest
@@ -8,25 +8,15 @@ LABEL version=${GIT_VERSION}
 
 RUN echo ${GIT_VERSION}
 
-RUN mkdir /home/jovyan/work/py/ \
-    && mkdir /home/jovyan/work/py/news-service \
-    && mkdir /home/jovyan/work/py/news-service/pnews
-WORKDIR /home/jovyan/work/py/news-service
-COPY . ./pnews
+RUN   useradd docker \
+    && mkdir /home/docker \
+    && mkdir /home/docker/nginx-flask-plumber \
+    && mkdir /home/docker/nginx-flask-plumber/rnews \
+    && chown docker:docker /home/docker \
+    && addgroup docker staff 
+USER docker
+WORKDIR /home/docker/nginx-flask-plumber
+COPY . ./rnews
 
-USER root
-RUN addgroup jovyan && \
-    chown -R jovyan:jovyan .
-
-USER jovyan
-
-
-RUN jupyter nbconvert --to python pnews/pnews.ipynb
-
-
-EXPOSE 9000
-
-ENTRYPOINT ["python"]
-CMD ["-u", "./pnews/pnews.py"] # -u stands for unbuffered, print output in console
-
- 
+EXPOSE 5000
+CMD ["Rscript", "rnews/rnews.R"]

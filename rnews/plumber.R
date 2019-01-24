@@ -7,9 +7,10 @@ function(msg=""){
 
 #* Echo back the input
 #* @param msg The message to echo
-#* @get /sleep
+#* @get /pause
 function(msg=""){
-  Sys.sleep(10000)
+  Sys.sleep(10)
+  return('Pause finished')
 }
 
 #* Plot a histogram

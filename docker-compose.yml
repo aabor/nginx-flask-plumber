@@ -15,15 +15,32 @@ services:
     image: aabor/pnews
     build: 
       context: pnews/.
-    ports:
-      - 5000:5000
     volumes:
-      - /home/$USER/Documents/Trading/fh_data-dev:/home/jovyan/work/R/fh/data
-      - /home/$USER/Dropbox/mt4/data-dev:/home/jovyan/work/R/fh/data/mt4
-      - /home/$USER/Documents/Trading/news-arch:/home/jovyan/fh/data/news-arch
+      - /home/$USER/R/nginx-flask-plumber:/home/jovyan/work/R/nginx-flask-plumber
+      - /home/$USER/Documents/Trading/fh_data-dev:/home/jovyan/work/R/nginx-flask-plumber/data
+      - /home/$USER/Dropbox/mt4/data-dev:/home/jovyan/work/R/nginx-flask-plumber/data/mt4
+      - /home/$USER/Documents/Trading/news-arch:/home/jovyan/nginx-flask-plumber/data/news-arch
       - /home/$USER/.ssh:/home/jovyan/.ssh/  
       - /home/$USER/.secrets:/home/jovyan/.secrets/  
       - /home/$USER/.httr-oauth:/home/jovyan/.httr-oauth
+    restart: "on-failure:30"
+    environment:
+      - TZ="Europe/Kiev"
+      - GIT_VERSION=$GIT_VERSION
+    networks: 
+      - selenium-hub
+  rnews: 
+    image: aabor/rnews
+    build: 
+      context: rnews/.
+    volumes:
+      - /home/$USER/R/nginx-flask-plumber:/home/docker/nginx-flask-plumber
+#      - /home/$USER/Documents/Trading/fh_data-dev:/home/docker/fh/data
+#      - /home/$USER/Dropbox/mt4/data-dev:/home/docker/fh/data/mt4
+#      - /home/$USER/Documents/Trading/news-arch:/home/docker/fh/data/news-arch
+      - /home/$USER/.ssh:/home/docker/.ssh/  
+      - /home/$USER/.secrets:/home/docker/.secrets/  
+      - /home/$USER/.httr-oauth:/home/docker/.httr-oauth
     restart: "on-failure:30"
     environment:
       - TZ="Europe/Kiev"
