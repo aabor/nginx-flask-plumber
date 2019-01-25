@@ -1,7 +1,10 @@
 library(tidyverse)
+library(readr)
+library(jsonlite)
 library("httr")
 library(logging)
 library(plumber)
+
 removeHandler("writeToFile")
 basicConfig()
 getwd()

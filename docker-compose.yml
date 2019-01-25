@@ -35,7 +35,7 @@ services:
       context: rnews/.
     volumes:
       - /home/$USER/R/nginx-flask-plumber:/home/docker/nginx-flask-plumber
-#      - /home/$USER/Documents/Trading/fh_data-dev:/home/docker/fh/data
+      - /home/$USER/Documents/Trading/fh_data-dev:/home/docker/nginx-flask-plumber/data
 #      - /home/$USER/Dropbox/mt4/data-dev:/home/docker/fh/data/mt4
 #      - /home/$USER/Documents/Trading/news-arch:/home/docker/fh/data/news-arch
       - /home/$USER/.ssh:/home/docker/.ssh/  
