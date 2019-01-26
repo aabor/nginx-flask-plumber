@@ -5,7 +5,7 @@ services:
     environment:
       - TZ="Europe/Kiev"
       - USER=$USER
-      - USERID=$UID aabor/nbdatascience
+      - USERID=$UID
     volumes:
       - .:/home/jovyan/work/nginx-flask-plumber
     working_dir: /home/jovyan/work/nginx-flask-plumber
@@ -15,7 +15,7 @@ services:
     environment:
       - TZ="Europe/Kiev"
       - USER=$USER
-      - USERID=$UID rocker/rstudio
+      - USERID= $UID
     volumes:
       - .:/home/docker/nginx-flask-plumber
       - ./test-reports:/home/docker/nginx-flask-plumber/rnews/tests/testthat/test-reports
