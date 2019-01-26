@@ -35,10 +35,10 @@ pipeline {
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
                     docker-compose -f docker-compose-test.yml up rnews
                 '''
-                sh''
+                sh'''
                     echo "Listing reports"
                     ls -l test-reports
-                ''
+                '''
             }
         }
         stage('Functional tests') {
