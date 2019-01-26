@@ -6,7 +6,7 @@ pipeline {
         FH_DATA="/home/$USER/Documents/Trading/fh_data"
         DOCKER_CREDS=credentials('jenkins-docker-credentials')
         RSTUDIO_COMMON_CREDS = credentials('jenkins-rstudio-common-creds')    
-        UID ="$(id -u)"
+        UID=sh(script: "$(id -u)", returnStdout: true).trim()
     }    
     stages {
         stage('checkout'){
