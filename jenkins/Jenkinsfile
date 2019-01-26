@@ -17,6 +17,7 @@ pipeline {
                 sh 'echo "${BUILD_USER_EMAIL}"'
                 sh '''
                     #chmod 777 test-reports
+                    export UID=$(id -u)
                     echo "UID is $UID"
                     echo 'listing permissions'
                     ls -l
