@@ -18,9 +18,10 @@ pipeline {
                 echo 'Testing pnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    chmod 777 test-reports
+                    chmod 774 test-reports
                     echo 'groups are:'
                     groups
+                    whoami
                     docker-compose -f docker-compose-test.yml up pnews
                 '''
                 echo 'Testing rnews...'
