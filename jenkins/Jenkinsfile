@@ -25,7 +25,7 @@ pipeline {
                     pwd
                     ls
                     echo 'listing permissions'
-                    ll
+                    l -l
                     junit '**/test-reports/*.xml'
                 '''
                 echo 'Testing rnews...'
