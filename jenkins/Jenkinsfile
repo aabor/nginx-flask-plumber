@@ -6,6 +6,7 @@ pipeline {
         FH_DATA="/home/$USER/Documents/Trading/fh_data"
         DOCKER_CREDS=credentials('jenkins-docker-credentials')
         RSTUDIO_COMMON_CREDS = credentials('jenkins-rstudio-common-creds')    
+        UID = "${env.UID}"
     }    
     stages {
         stage('checkout'){
@@ -15,7 +16,6 @@ pipeline {
                     #chmod 777 test-reports
                     echo 'listing permissions'
                     ls -l
-                    export UID
                 '''
             }
         }
@@ -29,7 +29,6 @@ pipeline {
                 echo 'Testing pnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    export UID
                     docker-compose -f docker-compose-test.yml up pnews
                 '''
                 echo 'Testing rnews...'
