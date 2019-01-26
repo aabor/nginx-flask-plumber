@@ -30,13 +30,11 @@ pipeline {
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
                     docker-compose -f docker-compose-test.yml up pnews
                 '''
-                junit '**/test-reports/*.xml'
                 echo 'Testing rnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
                     docker-compose -f docker-compose-test.yml up rnews
                 '''
-                junit '**/test-reports/*.xml'
             }
         }
         stage('Functional tests') {
@@ -52,6 +50,7 @@ pipeline {
             }
             post {
                 always{
+                    junit '**/test-reports/*.xml'
                     cleanWs()
                     sh '''
                         pwd
