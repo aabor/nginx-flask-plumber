@@ -2,13 +2,16 @@ pipeline {
     agent any
     environment {
         USER=credentials('jenkins-current-user')
-        PATH="/var/lib/jenkins/miniconda3/bin:$PATH"
-        SOURCE_CODE="/home/$USER/R/nginx-flask-plumber"
+        SOURCE_CODE="nginx-flask-plumber"
         FH_DATA="/home/$USER/Documents/Trading/fh_data"
         DOCKER_CREDS=credentials('jenkins-docker-credentials')
         RSTUDIO_COMMON_CREDS = credentials('jenkins-rstudio-common-creds')    
     }    
     stages {
+        stage('Check source control'){
+            git clone git@github.com:aabor/nginx-flask-plumber.git
+            cd $SOURCE_CODE
+        }
         stage('Developer'){
             environment { 
                 FH_NAMESPACE="-dev"
@@ -18,13 +21,13 @@ pipeline {
             steps {
                 echo 'Testing pnews...'
                 sh '''
-                    cd $SOURCE_CODE
+                    #cd $SOURCE_CODE
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
                     docker-compose -f docker-compose-test.yml up pnews
                 '''
                 echo 'Testing rnews...'
                 sh '''
-                    cd $SOURCE_CODE
+                    #cd $SOURCE_CODE
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
                     docker-compose -f docker-compose-test.yml up rnews
                 '''
