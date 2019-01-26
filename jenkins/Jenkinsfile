@@ -12,7 +12,7 @@ pipeline {
             steps{
                 echo 'Changing permissions so that docker can save rest reports'
                 sh '''
-                    chmod 777 test-reports
+                    #chmod 775 test-reports
                     echo 'listing permissions'
                     ls -l
                 '''
@@ -28,16 +28,12 @@ pipeline {
                 echo 'Testing pnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    pwd
-                    ls -l
                     docker-compose -f docker-compose-test.yml up pnews
                 '''
                 junit '**/test-reports/*.xml'
                 echo 'Testing rnews...'
                 sh '''
-                    pwd
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    ls -l
                     docker-compose -f docker-compose-test.yml up rnews
                 '''
                 junit '**/test-reports/*.xml'
