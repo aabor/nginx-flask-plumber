@@ -12,11 +12,11 @@ pipeline {
         stage('checkout'){
             steps{
                 echo 'Changing permissions so that docker can save rest reports'
+                sh 'echo "${BUILD_USER}"'
+                sh 'echo "${BUILD_USER_ID}"'
+                sh 'echo "${BUILD_USER_EMAIL}"'
                 sh '''
                     #chmod 777 test-reports
-                    sh 'echo "${BUILD_USER}"'
-                    sh 'echo "${BUILD_USER_ID}"'
-                    sh 'echo "${BUILD_USER_EMAIL}"'
                     echo "UID is $UID"
                     echo 'listing permissions'
                     ls -l
