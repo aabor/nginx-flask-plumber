@@ -29,12 +29,14 @@ pipeline {
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
                     echo "UID is $UID"
+                    export USERID=$UID
                     docker-compose -f docker-compose-test.yml up pnews
                 '''
                 echo 'Testing rnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
                     echo "UID is $UID"
+                    export USERID=$UID
                     docker-compose -f docker-compose-test.yml up rnews
                 '''
                 sh'''
