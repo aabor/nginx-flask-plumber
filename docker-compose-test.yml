@@ -4,18 +4,14 @@ services:
     image: aabor/nbdatascience
     environment:
       - TZ="Europe/Kiev"
-      #- USER=$USER
-      #- USERID=$UID
     volumes:
-      - $PWD:/home/jovyan/work/nginx-flask-plumber:rw
+      - $PWD:/home/jovyan/work/nginx-flask-plumber
     working_dir: /home/jovyan/work/nginx-flask-plumber
     command: bash -c "pwd && pytest --junitxml test-reports/pnews.xml pnews/test_pnews.py"
   rnews:
     image: aabor/rbase-finance
     environment:
       - TZ="Europe/Kiev"
-      #- USER=$USER
-      #- USERID=$UID
     volumes:
       - $PWD:/home/tester/nginx-flask-plumber
       - $PWD/test-reports:/home/tester/nginx-flask-plumber/rnews/tests/testthat/test-reports:rw      
