@@ -118,3 +118,4 @@ log/*
 .httr-oauth
 test.json
 test-reports/*
+!test-reports/.gitkeep 
