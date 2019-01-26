@@ -5,11 +5,11 @@ services:
     volumes:
       - .:/home/jovyan/work/nginx-flask-plumber
     working_dir: /home/jovyan/work/nginx-flask-plumber
-    command: bash -c "pwd && pytest --junitxml test-reports/pnews.xml pnews/test_pnews.py && chmod 666 test-reports/pnews.xml"
+    command: bash -c "pwd && pytest --junitxml test-reports/pnews.xml pnews/test_pnews.py"
   rnews:
     image: aabor/rstudio-finance
     volumes:
       - .:/home/docker/nginx-flask-plumber
       - ./test-reports:/home/docker/nginx-flask-plumber/rnews/tests/testthat/test-reports
     working_dir: /home/docker/nginx-flask-plumber
-    command: bash -c "pwd && Rscript --verbose rnews/tests/run-tests.R && chmod 666 test-reports/rnews.xml"
+    command: bash -c "pwd && Rscript --verbose rnews/tests/run-tests.R"

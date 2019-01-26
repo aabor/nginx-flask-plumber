@@ -29,6 +29,7 @@ pipeline {
                 sh '''
                     pwd
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
+                    chmod 775 test-reports
                     docker-compose -f docker-compose-test.yml up pnews
                 '''
                 junit '**/test-reports/*.xml'
@@ -36,6 +37,7 @@ pipeline {
                 sh '''
                     pwd
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
+                    chmod 775 test-reports
                     docker-compose -f docker-compose-test.yml up rnews
                 '''
                 junit '**/test-reports/*.xml'
