@@ -12,7 +12,7 @@ pipeline {
             steps{
                 echo 'Changing permissions so that docker can save rest reports'
                 sh '''
-                    #chmod 775 test-reports
+                    chmod 775 test-reports
                     echo 'listing permissions'
                     ls -l
                 '''
@@ -49,8 +49,17 @@ pipeline {
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
                 '''
-                echo 'Finishing..'
             }
         }
+        stage('Clean Work Space') {
+            steps {
+                cleanWs()
+                sh '''
+                    pwd
+                    ls
+                    echo "Finishing.."
+                '''
+            }
+       }
     }
 }
