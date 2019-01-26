@@ -117,4 +117,4 @@ img/*
 log/*
 .httr-oauth
 test.json
-rnews/tests/testthat/test-reports/*
+rnews/tests/testthat/test-reports
