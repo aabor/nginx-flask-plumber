@@ -24,6 +24,7 @@ pipeline {
                     echo 'listing present working directory'
                     pwd
                     ls
+                    chmod 775 test-reports
                     echo 'listing permissions'
                     ls -l
                     junit '**/test-reports/*.xml'
