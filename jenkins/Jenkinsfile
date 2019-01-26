@@ -12,7 +12,7 @@ pipeline {
             steps{
                 echo 'Changing permissions so that docker can save rest reports'
                 sh '''
-                    chmod 777 test-reports
+                    #chmod 777 test-reports
                     echo 'listing permissions'
                     ls -l
                 '''

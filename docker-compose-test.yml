@@ -2,12 +2,19 @@ version: '3.5'
 services:
   pnews:
     image: aabor/nbdatascience
+    environment:
+      - TZ="Europe/Kiev"
+      - USER=jovyan
     volumes:
       - .:/home/jovyan/work/nginx-flask-plumber
     working_dir: /home/jovyan/work/nginx-flask-plumber
     command: bash -c "pwd && pytest --junitxml test-reports/pnews.xml pnews/test_pnews.py"
   rnews:
-    image: aabor/rstudio-finance
+    image: aabor/rbase-finance
+    environment:
+      - TZ="Europe/Kiev"
+      - USER=$USER
+      - USERID=$UID rocker/rstudio
     volumes:
       - .:/home/docker/nginx-flask-plumber
       - ./test-reports:/home/docker/nginx-flask-plumber/rnews/tests/testthat/test-reports
