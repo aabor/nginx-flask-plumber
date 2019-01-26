@@ -18,8 +18,8 @@ pipeline {
                 echo'Check source control'
                 sh '''
                 pwd
-                git clone git@github.com:aabor/nginx-flask-plumber.git
-                cd $SOURCE_CODE
+                #git clone git@github.com:aabor/nginx-flask-plumber.git
+                #cd $SOURCE_CODE
                 '''
                 echo 'Testing pnews...'
                 sh '''
