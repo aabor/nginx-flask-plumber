@@ -6,19 +6,14 @@ pipeline {
         FH_DATA="/home/$USER/Documents/Trading/fh_data"
         DOCKER_CREDS=credentials('jenkins-docker-credentials')
         RSTUDIO_COMMON_CREDS = credentials('jenkins-rstudio-common-creds')    
-        UID = "${env.UID}"
+        UID ="$(id -u)"
     }    
     stages {
         stage('checkout'){
             steps{
                 echo 'Changing permissions so that docker can save rest reports'
-                sh 'echo "${BUILD_USER}"'
-                sh 'echo "${BUILD_USER_ID}"'
-                sh 'echo "${BUILD_USER_EMAIL}"'
                 sh '''
                     #chmod 777 test-reports
-                    export UID=$(id -u)
-                    echo "UID is $UID"
                     echo 'listing permissions'
                     ls -l
                 '''
@@ -34,11 +29,13 @@ pipeline {
                 echo 'Testing pnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
+                    echo "UID is $UID"
                     docker-compose -f docker-compose-test.yml up pnews
                 '''
                 echo 'Testing rnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
+                    echo "UID is $UID"
                     docker-compose -f docker-compose-test.yml up rnews
                 '''
                 sh'''
