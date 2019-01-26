@@ -15,13 +15,13 @@ pipeline {
                 NEWS="/home/$USER/Dropbox/news/data$FH_NAMESPACE"
             }            
             steps {
+                sh'''
+                echo "Changing permissions for test reports"
+                chmod 777 test-reports
+                '''
                 echo 'Testing pnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    chmod 774 test-reports
-                    echo 'groups are:'
-                    groups
-                    whoami
                     docker-compose -f docker-compose-test.yml up pnews
                 '''
                 echo 'Testing rnews...'
