@@ -8,13 +8,6 @@ pipeline {
         RSTUDIO_COMMON_CREDS = credentials('jenkins-rstudio-common-creds')    
     }    
     stages {
-        stage('Check source control'){
-            sh '''
-            pwd
-            git clone git@github.com:aabor/nginx-flask-plumber.git
-            cd $SOURCE_CODE
-            '''
-        }
         stage('Developer'){
             environment { 
                 FH_NAMESPACE="-dev"
@@ -22,6 +15,12 @@ pipeline {
                 NEWS="/home/$USER/Dropbox/news/data$FH_NAMESPACE"
             }            
             steps {
+                echo'Check source control'
+                sh '''
+                pwd
+                git clone git@github.com:aabor/nginx-flask-plumber.git
+                cd $SOURCE_CODE
+                '''
                 echo 'Testing pnews...'
                 sh '''
                     pwd
