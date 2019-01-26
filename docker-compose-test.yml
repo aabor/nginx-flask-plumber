@@ -4,7 +4,8 @@ services:
     image: aabor/nbdatascience
     environment:
       - TZ="Europe/Kiev"
-      - USER=jovyan
+      - USER=$USER
+      - USERID=$UID aabor/nbdatascience
     volumes:
       - .:/home/jovyan/work/nginx-flask-plumber
     working_dir: /home/jovyan/work/nginx-flask-plumber
