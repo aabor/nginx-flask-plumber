@@ -7,7 +7,7 @@ services:
       - USER=$USER
       - USERID=$UID
     volumes:
-      - .:/home/jovyan/work/nginx-flask-plumber
+      - $PWD:/home/jovyan/work/nginx-flask-plumber
     working_dir: /home/jovyan/work/nginx-flask-plumber
     command: bash -c "pwd && pytest --junitxml test-reports/pnews.xml pnews/test_pnews.py"
   rnews:
@@ -17,7 +17,7 @@ services:
       - USER=$USER
       - USERID= $UID
     volumes:
-      - .:/home/docker/nginx-flask-plumber
-      - ./test-reports:/home/docker/nginx-flask-plumber/rnews/tests/testthat/test-reports
+      - $PWD:/home/docker/nginx-flask-plumber
+      - $PWD/test-reports:/home/docker/nginx-flask-plumber/rnews/tests/testthat/test-reports      
     working_dir: /home/docker/nginx-flask-plumber
     command: bash -c "pwd && Rscript --verbose rnews/tests/run-tests.R"
