@@ -8,12 +8,9 @@ LABEL version=${GIT_VERSION}
 
 RUN echo ${GIT_VERSION}
 
-RUN   useradd docker \
-    && mkdir /home/docker \
-    && mkdir /home/docker/nginx-flask-plumber \
-    && mkdir /home/docker/nginx-flask-plumber/rnews \
-    && chown docker:docker /home/docker \
-    && addgroup docker staff 
+RUN mkdir /home/docker/nginx-flask-plumber \
+    && mkdir /home/docker/nginx-flask-plumber/rnews
+    
 USER docker
 WORKDIR /home/docker/nginx-flask-plumber
 COPY . ./rnews

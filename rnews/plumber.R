@@ -1,16 +1,30 @@
+#* Main page
+#* curl -i http://localhost:80/rnews/
+#* @get /
+function(){
+  'Service rnews (language R) is ready!\r\n'
+}
+#* Health check
+#* curl -i http://localhost:80/rnews/health
+#* @param msg The message to echo
+#* @get /health
+function(){
+  'Healthy\r\n'
+}
 #* Echo back the input
+#* curl -i http://localhost:80/rnews/echo?msg='hello'
 #* @param msg The message to echo
 #* @get /echo
 function(msg=""){
-  list(msg = paste0("The message is: '", msg, "'"))
+  toJSON(list(msg = str_glue('The message is: "{msg}"')), pretty = T)
 }
-
-#* Echo back the input
-#* @param msg The message to echo
+#* Pause execution by input number of seconds
+#* curl -i http://localhost:80/rnews/pause?duration=2
+#* @param duration int pause length
 #* @get /pause
-function(msg=""){
-  Sys.sleep(10)
-  return('Pause finished')
+function(duration=1){
+  Sys.sleep(duration)
+  toJSON(list(msg=str_glue('Pause of {duration} seconds finished')), pretty = T)
 }
 
 #* Plot a histogram
