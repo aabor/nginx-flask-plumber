@@ -5,14 +5,6 @@ library("httr")
 library(testthat)
 
 url<-"http://rnews:5000"
-context("Main page does not exist")
-test_that("page does not exist", {
-  resp<-GET(url, path="not exist")
-  expect_equal(resp$status_code, 200)
-  ctt<-content(resp) %>% unlist %>% str_squish()
-  expect_equal(ctt, "Service rnews (language R) is ready!")
-  print("page does not exist")
-})
 context("Main page exist")
 test_that("Main page exist", {
   resp<-GET(url)
