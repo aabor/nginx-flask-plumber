@@ -2,6 +2,7 @@
 #* curl -i http://localhost:80/rnews/
 #* @get /
 function(){
+  loginfo("main page opened.", logger="rnews")
   'Service rnews (language R) is ready!\r\n'
 }
 #* Health check
@@ -9,6 +10,7 @@ function(){
 #* @param msg The message to echo
 #* @get /health
 function(){
+  loginfo("checked.", logger="rnews.health")
   'Healthy\r\n'
 }
 #* Echo back the input
@@ -16,6 +18,7 @@ function(){
 #* @param msg The message to echo
 #* @get /echo
 function(msg=""){
+  loginfo(msg, logger="rnews.echo")
   toJSON(list(msg = str_glue('The message is: "{msg}"')), pretty = T)
 }
 #* Pause execution by input number of seconds
@@ -23,10 +26,10 @@ function(msg=""){
 #* @param duration int pause length
 #* @get /pause
 function(duration=1){
+  loginfo(str_glue("Pause {duration} seconds"), logger="rnews.pause")
   Sys.sleep(duration)
   toJSON(list(msg=str_glue('Pause of {duration} seconds finished')), pretty = T)
 }
-
 #* Plot a histogram
 #* @png
 #* @get /plot
@@ -35,10 +38,3 @@ function(){
   hist(rand)
 }
 
-#* Return the sum of two numbers
-#* @param a The first number to add
-#* @param b The second number to add
-#* @post /sum
-function(a, b){
-  as.numeric(a) + as.numeric(b)
-}

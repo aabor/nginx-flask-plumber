@@ -11,7 +11,7 @@ getwd()
 log_file<-str_c(basename(getwd()), ".log", sep='')
 #unlink("sample.log")
 addHandler(writeToFile, logger="", file=log_file)
-loginfo("hello world", logger="rnews")
+loginfo("started", logger="rnews")
 tryCatch({
   r <- plumb("rnews/plumber.R")  # Where 'plumber.R' is the location of the file shown above
   r$run(host = "0.0.0.0", port=5000)

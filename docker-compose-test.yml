@@ -1,6 +1,6 @@
 version: '3.5'
 services:
-  pnews:
+  pnews-test:
     image: aabor/nbdatascience
     environment:
       - TZ="Europe/Kiev"
@@ -8,7 +8,9 @@ services:
       - $PWD:/home/jovyan/work/nginx-flask-plumber
     working_dir: /home/jovyan/work/nginx-flask-plumber
     command: bash -c "pwd && pytest --junitxml test-reports/pnews.xml pnews/test_pnews.py"
-  rnews:
+    networks: 
+      - front-end
+  rnews-test:
     image: aabor/rbase-finance
     environment:
       - TZ="Europe/Kiev"
@@ -17,3 +19,7 @@ services:
       - $PWD/test-reports:/home/tester/nginx-flask-plumber/rnews/tests/testthat/test-reports:rw      
     working_dir: /home/tester/nginx-flask-plumber
     command: bash -c "pwd && Rscript --verbose rnews/tests/run-tests.R"
+    networks: 
+      - front-end
+  front-end:
+    external: true

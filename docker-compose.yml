@@ -11,8 +11,9 @@ services:
       restart: always
       depends_on:
       - pnews
+      - rnews
       networks: 
-        - selenium-hub
+        - back-end
   pnews: 
     image: aabor/pnews
     build: 
@@ -31,6 +32,8 @@ services:
       - GIT_VERSION=$GIT_VERSION
     networks: 
       - selenium-hub
+      - front-end
+      - back-end
   rnews: 
     image: aabor/rnews
     build: 
@@ -48,7 +51,12 @@ services:
       - TZ="Europe/Kiev"
       - GIT_VERSION=$GIT_VERSION
     networks: 
-      - selenium-hub
+      - back-end
+      - front-end
 networks:
+  back-end:
   selenium-hub:
     external: true
+  front-end:
+    external: true
+
