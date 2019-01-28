@@ -21,5 +21,6 @@ services:
     command: bash -c "pwd && Rscript --verbose rnews/tests/run-tests.R"
     networks: 
       - front-end
-  front-end:
-    external: true
+networks: 
+    front-end:
+      external: true
