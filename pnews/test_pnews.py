@@ -40,21 +40,18 @@ def test_health():
     assert r.status_code == requests.codes.ok
     assert r.text.strip() == 'Healthy'
 def test_echo():
-    payload = {'msg': 'rnews echo test'}
-    msg="rnews echo test"
+    payload = {'msg': 'pnews echo test'}
     r = requests.get(os.path.join(url, 'echo'), params=payload)
     assert r.status_code == requests.codes.ok
     msg=(r.json()['msg'].strip())
-    assert msg == 'The message is: \"rnews echo test\"'
+    assert msg == 'The message is: \"pnews echo test\"'
 def test_pause():
     duration=2
     r = requests.get(os.path.join(url, 'pause', str(duration)))
     assert r.status_code == requests.codes.ok
     assert r.text.strip() == 'Pause of 2 seconds finished'
-def test_open_browser():
-    r = requests.get(os.path.join(url, 'open_browser'))
-    assert r.status_code == requests.codes.ok
-    r = requests.get(os.path.join(url, 'close_browser'))
+def test_browser_session():
+    r = requests.get(os.path.join(url, 'browser_session'))
     assert r.status_code == requests.codes.ok
 # def test_close_browser():
 #     r = requests.get(os.path.join(url, 'close_browser'))
