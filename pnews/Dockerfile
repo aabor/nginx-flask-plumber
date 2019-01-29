@@ -8,10 +8,9 @@ LABEL version=${GIT_VERSION}
 
 RUN echo ${GIT_VERSION}
 
-RUN mkdir /home/jovyan/work/py/ \
-    && mkdir /home/jovyan/work/py/news-service \
-    && mkdir /home/jovyan/work/py/news-service/pnews
-WORKDIR /home/jovyan/work/py/news-service
+RUN mkdir /home/jovyan/nginx-flask-plumber \
+    && mkdir /home/jovyan/nginx-flask-plumber/pnews
+WORKDIR /home/jovyan/nginx-flask-plumber
 COPY . ./pnews
 
 USER root
@@ -23,10 +22,9 @@ USER jovyan
 
 RUN jupyter nbconvert --to python pnews/pnews.ipynb
 
-
 EXPOSE 5000
 
 ENTRYPOINT ["python"]
-CMD ["-u", "./pnews/pnews.py"] # -u stands for unbuffered, print output in console
+CMD ["-u", "pnews/pnews.py"] # -u stands for unbuffered, print output in console
 
  
