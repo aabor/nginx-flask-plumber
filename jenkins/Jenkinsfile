@@ -22,12 +22,12 @@ pipeline {
                 echo 'Testing pnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    docker-compose -f docker-compose-test.yml up pnews
+                    docker-compose -f docker-compose-test.yml up pnews-test
                 '''
                 echo 'Testing rnews...'
                 sh '''
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    docker-compose -f docker-compose-test.yml up rnews
+                    docker-compose -f docker-compose-test.yml up rnews-test
                 '''
             }
         }
