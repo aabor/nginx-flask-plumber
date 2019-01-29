@@ -1,3 +1,5 @@
 library('testthat')
-options(testthat.output_file = "test-reports/rnews.xml")
+wd<-getwd()
+output_file<-file.path(wd, "rnews/tests/testthat/test-reports/rnews.xml")
+options(testthat.output_file = output_file)
 testthat::test_dir('rnews/tests/testthat')
