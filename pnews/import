@@ -1,0 +1,3 @@
+--2019-01-29 10:13:23--  http://pytest/
+Resolving pytest (pytest)... failed: Name or service not known.
+wget: unable to resolve host address ‘pytest’
