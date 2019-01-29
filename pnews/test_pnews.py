@@ -32,6 +32,22 @@ import requests
 
 url="http://pnews:5000"
 def test_main_page():
-  r = requests.get(url)
-  assert r.status_code == requests.codes.ok
-  assert r.text.strip() == 'Service pnews (language python) is ready!'
+    r = requests.get(url)
+    assert r.status_code == requests.codes.ok
+    assert r.text.strip() == 'Service pnews (language python) is ready!'
+def test_health():
+    r = requests.get(os.path.join(url, 'health'))
+    assert r.status_code == requests.codes.ok
+    assert r.text.strip() == 'Healthy'
+def test_echo():
+    payload = {'msg': 'rnews echo test'}
+    msg="rnews echo test"
+    r = requests.get(os.path.join(url, 'echo'), params=payload)
+    assert r.status_code == requests.codes.ok
+    msg=(r.json()['msg'].strip())
+    assert msg == 'The message is: \"rnews echo test\"'
+def test_pause():
+    duration=2
+    r = requests.get(os.path.join(url, 'pause', str(duration)))
+    assert r.status_code == requests.codes.ok
+    assert r.text.strip() == 'Pause of 2 seconds finished'
