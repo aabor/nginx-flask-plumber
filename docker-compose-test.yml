@@ -10,6 +10,7 @@ services:
     command: bash -c "pwd && pytest --junitxml pnews/test-reports/pnews.xml pnews/test_pnews.py"
     networks: 
       - front-end
+      - selenium-hub
   rnews-test:
     image: aabor/rbase-finance
     environment:
@@ -23,3 +24,7 @@ services:
 networks: 
     front-end:
       external: true
+    selenium-hub:
+      external: true
+
+
