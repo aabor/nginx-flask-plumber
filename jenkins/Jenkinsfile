@@ -18,6 +18,7 @@ pipeline {
                 sh'''
                 echo "Changing permissions for test reports"
                 chmod 777 pnews/test-reports
+                chmod 777 rnews/tests/testthat/test-reports
                 '''
                 echo 'Testing pnews...'
                 sh '''
