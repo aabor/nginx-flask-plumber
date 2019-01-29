@@ -30,6 +30,7 @@ services:
     environment:
       - TZ="Europe/Kiev"
       - GIT_VERSION=$GIT_VERSION
+      - WERKZEUG_DEBUG_PIN=off
     networks: 
       - selenium-hub
       - front-end
