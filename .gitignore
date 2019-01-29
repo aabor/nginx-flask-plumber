@@ -117,5 +117,4 @@ img/*
 log/*
 .httr-oauth
 test.json
-**/test-reports/*.xml
 **/flask_session/*
