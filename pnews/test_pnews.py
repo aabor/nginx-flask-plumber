@@ -51,3 +51,14 @@ def test_pause():
     r = requests.get(os.path.join(url, 'pause', str(duration)))
     assert r.status_code == requests.codes.ok
     assert r.text.strip() == 'Pause of 2 seconds finished'
+def test_open_browser():
+    r = requests.get(os.path.join(url, 'open_browser'))
+    assert r.status_code == requests.codes.ok
+def test_open_browser():
+    r = requests.get(os.path.join(url, 'close_browser'))
+    assert r.status_code == requests.codes.ok
+def test_connectivity():
+    r = requests.get(os.path.join(url, 'test_connectivity'))
+    assert r.status_code == requests.codes.ok
+    assert r.text.strip() == 'finished successfully'
+
