@@ -30,6 +30,14 @@ function(duration=1){
   Sys.sleep(duration)
   toJSON(list(msg=str_glue('Pause of {duration} seconds finished')), pretty = T)
 }
+#* Accept text message that contains data in table format
+#* @param duration int pause length
+#* @post /text_message
+function(req, res){
+  text<-req$postBody
+  loginfo(str_glue("recieved\r\n{text}"), logger="rnews.text_message")
+}
+
 #* Plot a histogram
 #* @png
 #* @get /plot
