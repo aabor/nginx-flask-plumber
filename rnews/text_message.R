@@ -93,11 +93,9 @@ post_text_data<-function(data_type="sr"){
 #' accept_text_data(payload)
 accept_text_data<-function(payload){
   l<-fromJSON(payload)
-  ret<-string2df(l$text)
+  ret<-read_csv(l$text)
   if(l$spec=="sr"){
     ret %>% 
-      mutate(dt=index) %>%
-      select(-index) %>% 
       df2xts() -> ret
   }
   return(ret)
@@ -125,18 +123,4 @@ df2xts<-function(df){
     df<-df %>% mutate(dt=as.POSIXct(dt, format="%Y-%m-%d %H:%M:%S"))
   }
   tk_xts(df, select = -dt, date_var = dt)
-}
-#' Convert string with csv encoded data to data.frame
-#'
-#' @param csv 
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' payload<-create_POST_payload("df") %>% fromJSON
-#' csv<-payload$text
-#' string2df(csv)
-string2df<-function(csv){
-  read_csv(csv)
 }
