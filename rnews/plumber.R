@@ -38,9 +38,18 @@ function(req, res){
   payload<-req$postBody
   loginfo(payload, logger="rnews.text_message")
   data<-accept_text_data(payload)
-  msg<-str_glue("recieved\r\n{head(data)}")
+  tb<-data
+  if(class(data) %in% c('xts', 'zoo')){
+    tb<-tk_tbl(data) %>% 
+      mutate(dt=as.character(index, format="%Y-%m-%d %H:%M:%S")) %>% 
+      select(-index)
+    nms<-colnames(tb)
+    nms<-c('dt', nms[-1])
+    tb<-select(tb, nms)
+  }
+  msg<-format_csv(tb)
   loginfo(msg, logger="rnews.text_message")
-  msg
+  "message accepted"
 }
 
 #* Plot a histogram
