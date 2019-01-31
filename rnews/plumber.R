@@ -34,9 +34,13 @@ function(duration=1){
 #* @param duration int pause length
 #* @post /text_message
 function(req, res){
-  text<-req$postBody
-  data<-accept_text_data(text)
-  loginfo(str_glue("recieved\r\n{head(data)}"), logger="rnews.text_message")
+  loginfo('text message in POST request arrived', logger="rnews.text_message")
+  payload<-req$postBody
+  loginfo(payload, logger="rnews.text_message")
+  data<-accept_text_data(payload)
+  msg<-str_glue("recieved\r\n{head(data)}")
+  loginfo(msg, logger="rnews.text_message")
+  msg
 }
 
 #* Plot a histogram

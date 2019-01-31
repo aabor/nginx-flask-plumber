@@ -15,6 +15,7 @@ services:
     image: aabor/rbase-finance
     environment:
       - TZ="Europe/Kiev"
+      - WERKZEUG_DEBUG_PIN=off
     volumes:
       - $PWD:/home/tester/nginx-flask-plumber      
     working_dir: /home/tester/nginx-flask-plumber

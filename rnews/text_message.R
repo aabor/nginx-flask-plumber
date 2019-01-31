@@ -43,19 +43,21 @@ create_test_xts<-function(full_time=T){
 #' data_type="sr"
 #' create_POST_payload(data_type)
 create_POST_payload<-function(data_type="sr"){
+  tb<-NULL
   if(data_type == "sr"){
     tb<-create_test_xts(full_time=T) %>% 
-      tk_tbl(index_rename = "dt", timetk_idx = FALSE)    
+      tk_tbl(index_rename = "dt", timetk_idx = FALSE) 
+    nms<-colnames(tb)
+    nms<-c('dt', nms[-1])
+    colnames(tb)<-nms
   }
   else{
     tb<-create_test_df()
   }
-  con<-textConnection("text", "w")
-  write.table(tb, file=con, row.names=F, col.names=T, sep="\t")
-  json<-list(spec=data_type, text=text) %>% 
+  df<-tb %>% mutate(dt=as.character(dt, format="%Y-%m-%d %H:%M:%S"))
+  format_csv(df, col_names=T) %>% 
+  list(spec=data_type, text= .) %>% 
     toJSON(simplifyVector = T, auto_unbox=T, pretty=T)
-  close(con)
-  json
 }
 #' POST text file in JSON format
 #'
@@ -66,12 +68,13 @@ create_POST_payload<-function(data_type="sr"){
 #'
 #' @examples
 #' data_type="sr"
-#' post_text_data()
+#' data_type="df"
+#' post_text_data(data_type)
 post_text_data<-function(data_type="sr"){
   payload<-create_POST_payload(data_type)
-  url<-"http://rnews:5000"
+  url<-"http://pnews:5000"
   url_path<-file.path(url, "text_message")
-  resp <- POST(url_path, body = payload)
+  resp <- POST(url_path, body = payload, content_type_json())
   if(resp$status_code == 200){
     loginfo("payload {payload} POSTed to {url_path}", logger="post_text_data")
   }
@@ -135,8 +138,5 @@ df2xts<-function(df){
 #' csv<-payload$text
 #' string2df(csv)
 string2df<-function(csv){
-  con<-textConnection(csv, "r")
-  tb<-read.table(file=con, sep="\t", header = T, stringsAsFactors = F)
-  close(con)
-  tb
+  read_csv(csv)
 }
