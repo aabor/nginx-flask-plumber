@@ -35,7 +35,8 @@ function(duration=1){
 #* @post /text_message
 function(req, res){
   text<-req$postBody
-  loginfo(str_glue("recieved\r\n{text}"), logger="rnews.text_message")
+  data<-accept_text_data(text)
+  loginfo(str_glue("recieved\r\n{head(data)}"), logger="rnews.text_message")
 }
 
 #* Plot a histogram

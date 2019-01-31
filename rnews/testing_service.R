@@ -1,5 +1,4 @@
 library(purrr)
-library(purrr)
 library(zoo)
 #' Import json string as R data frame
 #'
@@ -46,23 +45,7 @@ give_response<-function(df, file_name){
   write_json(res, file_name, simplifyVector = T, auto_unbox=T, pretty=T)
 }
 
-url1<-"http://localhost:5000"
-POST(url1, body = list(y = upload_file(file_response)))
+# url1<-"http://localhost:5000"
+# POST(url1, body = list(y = upload_file(file_response)))
 
-url <- "http://httpbin.org/get"
-resp<-GET(url)
-resp$url
-resp$status_code
-resp$request
-resp$times
-ctt<-content(resp)
-ctt$args
-ctt$origin
-ctt$headers
-
-GET(url, add_headers(a = 1, b = 2))
-GET(url, set_cookies(a = 1, b = 2))
-GET(url, add_headers(a = 1, b = 2), set_cookies(a = 1, b = 2))
-GET(url, authenticate("username", "password"))
-GET(url, verbose())
 

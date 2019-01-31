@@ -1,7 +1,4 @@
-library(tidyverse)
-library(readr)
-library(jsonlite)
-library("httr")
+source("rnews/rnews_imports.R")
 library(testthat)
 
 url<-"http://rnews:5000"
