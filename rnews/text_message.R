@@ -74,11 +74,7 @@ create_POST_payload<-function(data_type="sr"){
 post_text_data<-function(data_type="sr", url="http://pnews:5000"){
   payload<-create_POST_payload(data_type)
   url_path<-file.path(url, "text_message")
-  resp <- POST(url_path, body = payload, content_type_json())
-  if(resp$status_code == 200){
-    loginfo(str_glue("payload POSTed to {url_path}"), logger="rnews.post_text_data")
-  }
-  return(resp$status_code)
+  POST(url_path, body = payload, content_type_json())
 }
 #' Convert json payload to data.frame or xts
 #'

@@ -36,7 +36,6 @@ function(duration=1){
 function(req, res){
   loginfo('text message in POST request arrived', logger="rnews.text_message")
   payload<-req$postBody
-  loginfo(payload, logger="rnews.text_message")
   data<-accept_text_data(payload)
   tb<-data
   if(class(data) %in% c('xts', 'zoo')){
@@ -50,6 +49,18 @@ function(req, res){
   msg<-format_csv(tb)
   loginfo(msg, logger="rnews.text_message")
   "message accepted"
+}
+#* Test connection to pnews service, use POST request
+#* @post /test_connectivity
+function(req, res){
+  loginfo('started', logger="rnews.test_connectivity")
+  resp<-post_text_data(data_type="df", url="http://pnews:5000")
+  if (resp$status_code == 200)
+    msg='finished successfully'
+  else
+    msg="error from rnews"
+  loginfo(msg, logger="rnews.test_connectivity")
+  msg
 }
 
 #* Plot a histogram
