@@ -120,3 +120,37 @@ df2xts<-function(df){
   }
   tk_xts(df, select = -dt, date_var = dt)
 }
+#' Returns last update time of resource
+#'
+#' @param resource string name of the resource
+#'
+#' @return time in string representation
+#' @export
+#'
+#' @examples
+#' last_update_time() %>% class
+last_update_time<-function(resource="news"){
+  if(resource=="news"){
+    return (Sys.time() %>% format.POSIXct(format="%Y-%m-%d %H:%M:%S"))
+  }
+  return('failed')
+}
+#' Update resource using data provided in task
+#'
+#' @param task JSON data
+#'
+#' @return
+#' @export
+#'
+#' @examples
+update_resource<-function(spec, text){
+  if(spec=='news'){
+    return('updated')
+  }
+  if(spec %in% c('df', 'sr')){
+    loginfo(str_glue("\r\n{text}"), logger="rnews.update_resource")
+    return('test for update service passed')
+  }
+  return('failed')
+}
+

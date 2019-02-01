@@ -47,7 +47,7 @@ def create_test_df():
     d={'dt': dts, "event":hashes, "number": ns, "value": vs}
     df=pd.DataFrame(d)
     df['dt']=[dt.strftime('%Y-%m-%d %H:%M:%S') for dt in df.dt]
-    return df
+    return df.head()
 def create_test_series():
     date_rng = pd.date_range(start='2019-01-24', end='2019-01-25', freq='H')
     l=len(date_rng)
@@ -57,7 +57,7 @@ def create_test_series():
     d={'dt': dts, "number": ns, "value": vs}
     df=pd.DataFrame(d)
     df['dt']=[dt.strftime('%Y-%m-%d %H:%M:%S') for dt in df.dt]
-    return df
+    return df.head()
 def create_payload(data_type="sr"):
     if data_type not in ['sr', 'df']:
         raise Exception("Invalid data_type! " + data_type)
@@ -72,10 +72,10 @@ def create_payload(data_type="sr"):
     payload = {"spec":data_type, "text":output.getvalue()}
     output.close()
     return payload
-def post_text_data(data_type="sr", url="http://pnews:5000"):
+def post_text_data(data_type="sr", url="http://pnews:5000", endpoint="text_message"):
     payload=create_payload(data_type)
     data=json.dumps(payload)
-    url_path=os.path.join(url, "text_message")
+    url_path=os.path.join(url, endpoint)
     headers = {'Content-Type': 'application/json',}
     return requests.post(url_path, data=data, headers=headers)
 def accept_text_data(payload):

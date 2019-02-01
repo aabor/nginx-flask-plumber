@@ -31,7 +31,8 @@ function(duration=1){
   toJSON(list(msg=str_glue('Pause of {duration} seconds finished')), pretty = T)
 }
 #* Accept text message that contains data in table format
-#* @param duration int pause length
+#* @param req request object
+#* @param res response object
 #* @post /text_message
 function(req, res){
   loginfo('text message in POST request arrived', logger="rnews.text_message")
@@ -62,7 +63,29 @@ function(req, res){
   loginfo(msg, logger="rnews.test_connectivity")
   msg
 }
-
+#* Update resource 
+#* @param req request object
+#* @param res response object
+#* @serializer contentType list(type="application/json")
+#* @get /update
+#* @post /update
+function(req, res){
+  loginfo('update request arrived', logger="rnews.update")
+  print('POST Request printed:')
+  print(names(req))
+  if (req$REQUEST_METHOD == "GET") {
+    loginfo(str_glue('requested last update time for resource "{req$args$resource}"'), logger="rnews.update")
+    return(last_update_time(req$args$resource))
+  }
+  if (req$REQUEST_METHOD == "POST") {
+    payload<-req$postBody %>% fromJSON()
+    print(payload$spec)
+    print(payload$text)
+    loginfo(str_glue('Update arrived for resource "{payload$spec}"'), logger="rnews.update")
+    return(update_resource(payload$spec, payload$text))
+  }
+  loginfo('failed', logger="rnews.update")
+}
 #* Plot a histogram
 #* @png
 #* @get /plot
