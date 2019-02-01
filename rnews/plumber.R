@@ -74,15 +74,14 @@ function(req, res){
   print('POST Request printed:')
   print(names(req))
   if (req$REQUEST_METHOD == "GET") {
-    loginfo(str_glue('requested last update time for resource "{req$args$resource}"'), logger="rnews.update")
-    return(last_update_time(req$args$resource))
+    loginfo(str_glue('requested last update time for resource "{req$args$resource}", symbol "{req$args$symbol}"'), logger="rnews.update")
+    return(last_update_time(req$args$resource, req$args$symbol))
   }
   if (req$REQUEST_METHOD == "POST") {
     payload<-req$postBody %>% fromJSON()
-    print(payload$spec)
-    print(payload$text)
-    loginfo(str_glue('Update arrived for resource "{payload$spec}"'), logger="rnews.update")
-    return(update_resource(payload$spec, payload$text))
+    loginfo(str_glue('Update arrived for resource "{payload$spec}" symbol "{payload$symbol}"'), logger="rnews.update")
+    return(update_resource(payload$spec, payload$symbol, payload$text))
+    #return('OK')
   }
   loginfo('failed', logger="rnews.update")
 }
