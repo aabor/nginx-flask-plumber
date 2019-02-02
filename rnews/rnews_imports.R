@@ -18,3 +18,5 @@ suppressMessages(library(tidyquant))
 suppressMessages(library(jsonlite))
 suppressMessages(library("httr"))
 source("rnews/text_message.R")
+
+resources_initialization<-list()

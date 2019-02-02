@@ -120,6 +120,30 @@ df2xts<-function(df){
   }
   tk_xts(df, select = -dt, date_var = dt)
 }
+#' Check if paticular resource has been already updated at start up
+#'
+#' @param resource 
+#' @param symbol 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' symbol<-"NQ"
+#' check_init("quotes", symbol)
+check_init<-function(resource, symbol){
+  if(is.null(resources_initialization[[symbol]])){
+    resources_initialization[[symbol]]<<-T
+    return("false")
+  }
+  else{
+    if(resources_initialization[[symbol]]){
+      return("true")
+    }else{
+      return("false")
+    }
+  }
+}
 #' Returns last update time of resource
 #'
 #' @param resource string name of the resource
@@ -152,14 +176,12 @@ update_resource<-function(spec="news", symbol="", text=""){
     return('test for update service passed')
   }
   if(symbol !=""){
-    loginfo(str_glue("got update, printing:"), logger="rnews.update_resource")
     text<-str_replace_all(text, 'nl', '\n')
-    loginfo(str_glue("\n{text}"), logger="rnews.update_resource")
+    nquotes<-str_count(text, "\n")
+    loginfo(str_glue("symbol \"{symbol}\" updated, {nquotes} quotes received"), logger="rnews.update_resource")
+    #loginfo(str_glue("new quotes:\r\n{text}"), logger="rnews.update_resource")
     print(read_csv(text, col_names = F))
     return('test for update service passed')
   }
   return('failed')
 }
-text<-'2019-02-01 14:40:00,24981,24981,24961,24963,96newline2019-02-01 14:45:00,24962,24972,24962,24967,108newline2019-02-01 14:50:00,24966,24966,24952,24961,125newline2019-02-01 14:55:00,24960,24960,24950,24952,113newline2019-02-01 15:00:00,24953,24958,24948,24958,136newline2019-02-01 15:05:00,24959,24971,24957,24962,123newline2019-02-01 15:10:00,24963,24964,24948,24952,117newline2019-02-01 15:15:00,24953,24959,24942,24955,101newline2019-02-01 15:20:00,24956,24961,24948,24959,119newline2019-02-01 15:25:00,24958,24965,24947,24955,191newline2019-02-01 15:30:00,24958,25029,24958,25022,542newline2019-02-01 15:35:00,25021,25055,25018,25048,314newline2019-02-01 15:40:00,25048,25054,25036,25042,193newline2019-02-01 15:45:00,25041,25044,25024,25035,216newline2019-02-01 15:50:00,25033,25046,25024,25031,211newline2019-02-01 15:55:00,25032,25047,25031,25044,142newline2019-02-01 16:00:00,25045,25046,25034,25044,137newline2019-02-01 16:05:00,25045,25052,25033,25050,147newline2019-02-01 16:10:00,25049,25057,25045,25051,114newline2019-02-01 16:15:00,25050,25053,25019,25020,168newline2019-02-01 16:20:00,25020,25030,25014,25017,150newline2019-02-01 16:25:00,25018,25038,25018,25030,128newline'
-text<-str_replace_all(text, 'newline', '\n')
-text

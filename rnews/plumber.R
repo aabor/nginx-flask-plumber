@@ -30,6 +30,19 @@ function(duration=1){
   Sys.sleep(duration)
   toJSON(list(msg=str_glue('Pause of {duration} seconds finished')), pretty = T)
 }
+#* Check if service is initialized
+#* Event occurs when service is first loaded to memory
+#* curl -i http://localhost:80/rnews/init_check
+#* @param resource 
+#* @param symbol 
+#* @get /init_check
+function(resource, symbol){
+  ret<-check_init(resource, symbol)
+  if(ret=="false"){
+    loginfo(str_glue("for symbol {symbol} init checked, return {ret}"), logger="rnews.init_check")
+  }
+  ret
+}
 #* Accept text message that contains data in table format
 #* @param req request object
 #* @param res response object
@@ -70,9 +83,6 @@ function(req, res){
 #* @get /update
 #* @post /update
 function(req, res){
-  loginfo('update request arrived', logger="rnews.update")
-  print('POST Request printed:')
-  print(names(req))
   if (req$REQUEST_METHOD == "GET") {
     loginfo(str_glue('requested last update time for resource "{req$args$resource}", symbol "{req$args$symbol}"'), logger="rnews.update")
     return(last_update_time(req$args$resource, req$args$symbol))
