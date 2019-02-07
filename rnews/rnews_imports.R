@@ -16,6 +16,7 @@ suppressMessages(library(timetk))
 # 'ggplot2', 'lubridate', etc.
 suppressMessages(library(tidyquant))
 suppressMessages(library(jsonlite))
+# Tools for working with HTTP organised by HTTP verbs (GET(), POST(), etc)
 suppressMessages(library("httr"))
 source("rnews/text_message.R")
 

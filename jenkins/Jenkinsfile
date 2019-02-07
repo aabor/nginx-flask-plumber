@@ -2,41 +2,26 @@ pipeline {
     agent any
     environment {
         USER=credentials('jenkins-current-user')
-        SOURCE_CODE="nginx-flask-plumber"
-        FH_DATA="/home/$USER/Documents/Trading/fh_data"
         DOCKER_CREDS=credentials('jenkins-docker-credentials')
         RSTUDIO_COMMON_CREDS = credentials('jenkins-rstudio-common-creds')    
     }    
     stages {
         stage('Developer'){
-            environment { 
-                FH_NAMESPACE="-dev"
-                DATA="$FH_DATA$FH_NAMESPACE"
-                NEWS="/home/$USER/Dropbox/news/data$FH_NAMESPACE"
-            }            
             steps {
                 sh'''
                 echo "Changing permissions for test reports"
                 chmod 777 pnews/test-reports
                 chmod 777 rnews/tests/testthat/test-reports
                 '''
-                echo 'Testing pnews...'
+                echo 'Testing'
                 sh '''
+                    docker-compose down
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    docker-compose -f docker-compose-test.yml up pnews-test
-                '''
-                echo 'Testing rnews...'
-                sh '''
-                    export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    docker-compose -f docker-compose-test.yml up rnews-test
+                    docker-compose -f docker-compose -f docker-compose-test.yml up
                 '''
             }
         }
         stage('Functional tests') {
-            environment { 
-                FH_NAMESPACE="-test"
-                DATA="$FH_DATA$FH_NAMESPACE"
-            }            
             steps {
                 echo 'Testing'
                 sh '''
@@ -48,6 +33,7 @@ pipeline {
                     junit '**/test-reports/*.xml'
                     //cleanWs()
                     sh '''
+                        docker-compose down
                         pwd
                         ls
                         echo "Finishing.."
