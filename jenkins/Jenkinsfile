@@ -17,7 +17,7 @@ pipeline {
                 sh '''
                     docker-compose down
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    docker-compose -f docker-compose.yml -f docker-compose-test.yml up
+                    docker-compose -f docker-compose.yml -f docker-compose.test.yml up
                 '''
             }
         }
@@ -31,7 +31,7 @@ pipeline {
             post {
                 always{
                     junit '**/test-reports/*.xml'
-                    //cleanWs()
+                    cleanWs()
                     sh '''
                         docker-compose down
                         pwd
