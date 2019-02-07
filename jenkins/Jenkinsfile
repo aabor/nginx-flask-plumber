@@ -17,7 +17,9 @@ pipeline {
                 sh '''
                     docker-compose down
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
-                    docker-compose -f docker-compose.yml -f docker-compose.test.yml up
+                    docker-compose -f docker-compose.yml up -d
+                    docker-compose -f docker-compose.test.yml up
+                    docker-compose -f docker-compose.yml down
                 '''
             }
         }
@@ -33,7 +35,6 @@ pipeline {
                     junit '**/test-reports/*.xml'
                     cleanWs()
                     sh '''
-                        docker-compose down
                         pwd
                         ls
                         echo "Finishing.."
