@@ -15,7 +15,7 @@ In this example web services can perform health check, respond to echo requests,
 
 As soon as both web service are running in docker containers, both of them are connected in one network and can make API calls by its names. Nginx reverse proxy allows access to these services from other locations via HTTP calls on `localhost` for example. Reverse proxy has its own index page with `favicon.ico`.
 
-`Jenkinsfile` describe all the Continuous Integration and Continuous Deployment pipeline. It checkouts repository from Github, builds new docker images, runs containers (which will be recreated if were running), perform functional tests such as health check or connectivity between web services, collect junit reports and send email to the user in case of successfull finish.
+[`Jenkinsfile`](https://jenkins.io/doc/book/pipeline/jenkinsfile/) describe all the Continuous Integration and Continuous Deployment pipeline. It checkouts repository from Github, builds new docker images, runs containers (which will be recreated if were running), perform functional tests such as health check or connectivity between web services, collect junit reports and send email to the user in case of successfull finish.
 
 Usage. Fork or clone this repository. Install Docker and docker-compose. 
 
