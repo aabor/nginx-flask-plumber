@@ -45,14 +45,17 @@ http://localhost/rnews
 
 Some commands:
 http://localhost/pnews/browser_session
+
 http://localhost/rnews/pause?duration=2
+
 http://localhost/rnews/echo?msg=my message
 
+# Continuous Integration and Continuous Deployment
 
 To implement Continuous Integration and Continuous Deployment methodology install Jenkins and its plagins: Blue Ocean, [Email-ext](https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin),
 [JUnit](https://wiki.jenkins.io/display/JENKINS/JUnit+Plugin), [Credentials](https://wiki.jenkins.io/display/JENKINS/Credentials+Plugin) on your computer. 
 
-Create jenkins pipeline job. Provide jenkins with your credentials: USER=<your user name>, SSH keys to access Github, [configure email notification in Jenkins](https://www.360logica.com/blog/email-notification-in-jenkins/).
+Create jenkins pipeline job. Provide jenkins with your credentials: `USER=<your user name>`, SSH keys to access Github, [configure email notification in Jenkins](https://www.360logica.com/blog/email-notification-in-jenkins/).
 
 Then go to created pipeline job (job must have the same as project name), Configure, go to pipeline tab. Set Definition to Pipeline script from SCM, set repository URL, choose your github credentials, branch `master`, script path `jenkins/Jenkinsfile`.
 
