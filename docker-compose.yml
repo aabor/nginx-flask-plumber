@@ -1,7 +1,33 @@
 version: '3.5'
 services:
+#https://github.com/SeleniumHQ/docker-selenium
+version: '3'
+services:
+  selenium-hub:
+    image: selenium/hub:3.141.59-dubnium
+    environment:
+      - GRID_MAX_SESSION=15
+      - GRID_TIMEOUT=180000
+      - GRID_BROWSER_TIMEOUT=180000      
+    networks: 
+      - selenium-hub
+  chrome:
+    image: selenium/node-chrome:3.141.59-dubnium
+    shm_size: 512MB
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - NODE_MAX_INSTANCES=5
+      - NODE_MAX_SESSION=6
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - DBUS_SESSION_BUS_ADDRESS=/dev/null
+    networks: 
+      - selenium-hub
   nginx-nfp:
-      image: aabor/nginx-nfp
+      image: $USER/nginx-nfp
       build:
         context: nginx/.
       ports:
@@ -15,17 +41,11 @@ services:
       networks: 
         - back-end
   pnews: 
-    image: aabor/pnews
+    image: $USER/pnews
     build: 
       context: pnews/.
     volumes:
       - /home/$USER/R/nginx-flask-plumber/nginx-flask-plumber.log:/home/jovyan/nginx-flask-plumber/nginx-flask-plumber.log
-      - /home/$USER/Documents/Trading/fh_data-dev:/home/jovyan/nginx-flask-plumber/data
-      - /home/$USER/Dropbox/mt4/data-dev:/home/jovyan/nginx-flask-plumber/data/mt4
-      - /home/$USER/Documents/Trading/news-arch:/home/jovyan/nginx-flask-plumber/data/news-arch
-      - /home/$USER/.ssh:/home/jovyan/.ssh/  
-      - /home/$USER/.secrets:/home/jovyan/.secrets/  
-      - /home/$USER/.httr-oauth:/home/jovyan/.httr-oauth
     restart: "on-failure:30"
     environment:
       - TZ="Europe/Kiev"
@@ -36,17 +56,11 @@ services:
       - front-end
       - back-end
   rnews: 
-    image: aabor/rnews
+    image: $USER/rnews
     build: 
       context: rnews/.
     volumes:
-      - /home/$USER/R/nginx-flask-plumber/nginx-flask-plumber.log:/home/docker/nginx-flask-plumber/nginx-flask-plumber.log
-      - /home/$USER/Documents/Trading/fh_data-dev:/home/docker/nginx-flask-plumber/data
-#      - /home/$USER/Dropbox/mt4/data-dev:/home/docker/fh/data/mt4
-#      - /home/$USER/Documents/Trading/news-arch:/home/docker/fh/data/news-arch
-      - /home/$USER/.ssh:/home/docker/.ssh/  
-      - /home/$USER/.secrets:/home/docker/.secrets/  
-      - /home/$USER/.httr-oauth:/home/docker/.httr-oauth
+      - /home/$USER/R/nginx-flask-plumber/nginx-flask-plumber.log:/home/rstudio/nginx-flask-plumber/nginx-flask-plumber.log
     restart: "on-failure:30"
     environment:
       - TZ="Europe/Kiev"
