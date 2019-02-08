@@ -17,7 +17,7 @@ As soon as both web service are running in docker containers, both of them are c
 
 [`Jenkinsfile`](https://jenkins.io/doc/book/pipeline/jenkinsfile/) describes all the Continuous Integration and Continuous Deployment pipeline. It checkouts repository from Github, builds new docker images, runs containers (which will be recreated if were running), perform functional tests such as health check or connectivity between web services, collect junit reports and send email to the user in case of successfull finish.
 
-Usage. Fork or clone this repository. Install Docker and docker-compose. 
+Usage. This project is tested on Ubuntu 18.04 (linux). Fork or clone this repository. Install Docker and docker-compose. 
 
 ```sh
 git clone https://github.com/aabor/nginx-flask-plumber.git
@@ -50,7 +50,7 @@ http://localhost/rnews/pause?duration=2
 
 http://localhost/rnews/echo?msg=my message
 
-You can stop all running containers executing
+You can stop all running containers executing from project folder.
 
 ```sh
 docker-compose -f docker-compose.yml down
