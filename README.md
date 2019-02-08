@@ -13,7 +13,7 @@ Both services use similar logging packages [from R](http://logging.r-forge.r-pro
 
 In this example web services can perform health check, respond to echo requests, exchange data frames in text form. Payload in `POST` requests is coded in [json format](https://www.json.org/), data frames and time series variables is converted to `csv` text memory files and then packaged in `json`.
 
-As soon as both web service are running in docker containers, both of them are connected in one network and can make API calls by its names. Nginx reverse proxy allows access to these services from other locations via HTTP calls on `localhost` for example.
+As soon as both web service are running in docker containers, both of them are connected in one network and can make API calls by its names. Nginx reverse proxy allows access to these services from other locations via HTTP calls on `localhost` for example. Reverse proxy has its own index page with `favicon.ico`.
 
 `Jenkinsfile` describe all the Continuous Integration and Continuous Deployment pipeline. It checkouts repository from Github, builds new docker images, runs containers (which will be recreated if were running), perform functional tests such as health check or connectivity between web services, collect junit reports and send email to the user in case of successfull finish.
 
@@ -52,14 +52,14 @@ http://localhost/rnews/echo?msg=my message
 
 # Continuous Integration and Continuous Deployment
 
-To implement Continuous Integration and Continuous Deployment methodology install Jenkins and its plagins: Blue Ocean, [Email-ext](https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin),
+To implement Continuous Integration and Continuous Deployment methodology install Jenkins and its plugins: [Blue Ocean](https://jenkins.io/projects/blueocean/), [Email-ext](https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin),
 [JUnit](https://wiki.jenkins.io/display/JENKINS/JUnit+Plugin), [Credentials](https://wiki.jenkins.io/display/JENKINS/Credentials+Plugin) on your computer. 
 
 Create jenkins pipeline job. Provide jenkins with your credentials: `USER=<your user name>`, SSH keys to access Github, [configure email notification in Jenkins](https://www.360logica.com/blog/email-notification-in-jenkins/).
 
 Then go to created pipeline job (job must have the same as project name), Configure, go to pipeline tab. Set Definition to Pipeline script from SCM, set repository URL, choose your github credentials, branch `master`, script path `jenkins/Jenkinsfile`.
 
-Run the job.
+Run the job. You can see detailed test result in Blue Ocean tab.
   
   
 
