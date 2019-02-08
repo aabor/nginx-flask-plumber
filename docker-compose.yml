@@ -33,7 +33,8 @@ services:
       ports:
       - "80:80"
       volumes:
-      - /home/$USER/R/nginx-flask-plumber/nginx-flask-plumber.log:/home/www/server.log
+      - $PWD/nginx-flask-plumber.log:/home/www/server.log
+      - $PWD:/home/jovyan/work/nginx-flask-plumber
       restart: always
       depends_on:
       - pnews
@@ -45,7 +46,8 @@ services:
     build: 
       context: pnews/.
     volumes:
-      - /home/$USER/R/nginx-flask-plumber/nginx-flask-plumber.log:/home/jovyan/nginx-flask-plumber/nginx-flask-plumber.log
+      - $PWD/nginx-flask-plumber.log:/home/jovyan/nginx-flask-plumber/nginx-flask-plumber.log
+      - $PWD:/home/jovyan/work/nginx-flask-plumber
     restart: "on-failure:30"
     environment:
       - TZ="Europe/Kiev"
@@ -60,7 +62,8 @@ services:
     build: 
       context: rnews/.
     volumes:
-      - /home/$USER/R/nginx-flask-plumber/nginx-flask-plumber.log:/home/rstudio/nginx-flask-plumber/nginx-flask-plumber.log
+      - $PWD/nginx-flask-plumber.log:/home/jovyan/nginx-flask-plumber/nginx-flask-plumber.log
+      - $PWD:/home/jovyan/work/nginx-flask-plumber
     restart: "on-failure:30"
     environment:
       - TZ="Europe/Kiev"
