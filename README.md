@@ -50,6 +50,12 @@ http://localhost/rnews/pause?duration=2
 
 http://localhost/rnews/echo?msg=my message
 
+You can stop all running containers executing
+
+```sh
+docker-compose -f docker-compose.yml down
+```
+
 # Continuous Integration and Continuous Deployment
 
 To implement Continuous Integration and Continuous Deployment methodology install Jenkins and its plugins: [Blue Ocean](https://jenkins.io/projects/blueocean/), [Email-ext](https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin),
