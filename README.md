@@ -13,6 +13,6 @@ Both services use similar logging packages from R and Python respectively. All A
 
 In this example web services can perform health check, respond to echo requests, exchange data frames in text form. Payload in POST requests is coded in json format, data frames and time series variables is converted to csv text memory files and then packaged in json.
 
-jenkins file describe all the Continuous Integration and Continuous Deployment pipeline. It checkouts repository from Github, builds new docker images, runs containers (which will be recreated if were running), perform functional tests such as health check or connectivity between web services, collect junit reports and send email to the user in case of successfull finish.
+`Jenkinsfile` describe all the Continuous Integration and Continuous Deployment pipeline. It checkouts repository from Github, builds new docker images, runs containers (which will be recreated if were running), perform functional tests such as health check or connectivity between web services, collect junit reports and send email to the user in case of successfull finish.
 
 
