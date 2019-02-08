@@ -5,8 +5,8 @@ services:
     environment:
       - TZ="Europe/Kiev"
     volumes:
-      - $PWD:/home/jovyan/work/nginx-flask-plumber
-    working_dir: /home/jovyan/work/nginx-flask-plumber
+      - $PWD:/home/jovyan/nginx-flask-plumber
+    working_dir: /home/jovyan/nginx-flask-plumber
     command: bash -c "pwd && pytest --junitxml pnews/test-reports/pnews.xml pnews/test_pnews.py"
     networks: 
       - front-end

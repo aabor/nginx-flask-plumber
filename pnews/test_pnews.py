@@ -33,7 +33,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from flask import Flask, session, render_template, request, jsonify, redirect, g, url_for
 import requests
 print(os.getcwd())
-sys.path.insert(0, '/home/jovyan/work/nginx-flask-plumber/pnews')
+sys.path.insert(0, '/home/jovyan/nginx-flask-plumber/pnews')
 from helpers import create_payload, post_text_data, accept_text_data
 
 url="http://pnews:5000"
