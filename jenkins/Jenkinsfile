@@ -16,8 +16,8 @@ pipeline {
                     docker-compose down
                     export GIT_VERSION=$(git describe --tags | sed s/v//)
                     docker-compose -f docker-compose.yml up -d
-                    docker-compose -f docker-compose.test.yml rnews up
-                    docker-compose -f docker-compose.test.yml pnews up
+                    docker-compose -f docker-compose.test.yml  up rnews-test
+                    docker-compose -f docker-compose.test.yml  up pnews-test
                 '''
             }
         }
