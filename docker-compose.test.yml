@@ -12,13 +12,13 @@ services:
       - front-end
       - selenium-hub
   rnews-test:
-    image: aabor/rbase-finance
+    image: aabor/rstudio
     environment:
       - TZ="Europe/Kiev"
       - WERKZEUG_DEBUG_PIN=off
     volumes:
-      - $PWD:/home/tester/nginx-flask-plumber      
-    working_dir: /home/tester/nginx-flask-plumber
+      - $PWD:/home/rstudio/nginx-flask-plumber      
+    working_dir: /home/rstudio/nginx-flask-plumber
     command: bash -c "pwd && Rscript --verbose rnews/tests/run-tests.R"
     networks: 
       - front-end
