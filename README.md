@@ -26,6 +26,11 @@ cd nginx-flask-plumber
 docker network create front-end
 # build images
 docker-compose build
+```
+
+The command above will pull docker images from dockerhub. Since present project is for demonstration purpose only I decided not to produce lightweight docker images and use heavy production stuff, so the download size may seem excessive. Docker must download nginx image for reverse proxy, rstudio tidyverse image for rnews web service, jupyter python image for pnews web service and selenium hub image for web scraping.
+
+```sh
 # run containers in detached mode
 docker-compose up -d
 # test containers, results will be in project folder in nginx-flask-plumber.log
