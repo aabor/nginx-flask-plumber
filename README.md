@@ -110,7 +110,7 @@ As soon as both web service are running in docker containers, both of them are c
 
 [`Jenkinsfile`](https://jenkins.io/doc/book/pipeline/jenkinsfile/) describes all the Continuous Integration and Continuous Deployment pipeline. It checkouts repository from Github, builds new docker images, runs containers (which will be recreated if were running), perform functional tests such as health check or connectivity between web services, collect junit reports and send email to the user in case of successfull finish.
 
-Prerequisitives. Basic knowledge of R and python languages, docker basics (docker run, docker-compose up and down commands). This project is tested on Ubuntu 18.04 (linux).
+Prerequisitives. Basic knowledge of R and python languages, git basics (pull, push, fork repositories, commit changes), docker basics (docker run, docker-compose up and down commands). This project is tested on Ubuntu 18.04 (linux).
 
 Usage. Fork or clone this repository. Install Docker and docker-compose. All running containers will be accessible only from http://localhost:80 via reverse proxy. Make sure that no one else is listening `80` port on your system.
 
@@ -123,7 +123,7 @@ docker network create front-end
 docker-compose build
 ```
 
-The command above will pull docker images from dockerhub. Since present project is for demonstration purpose only I decided not to produce lightweight docker images and use heavy production stuff, so the download size may seem excessive. Docker must download nginx image for reverse proxy, rstudio tidyverse image for rnews web service, jupyter python image for pnews web service and selenium hub image for web scraping.
+The command above will pull `docker` images with all nesessary libraries preinstalled upon basic official images from my public repositories in [`dockerhub`](https://hub.docker.com/u/aabor). Since present project is for demonstration purpose only I decided not to produce lightweight docker images and use heavy production stuff, so the download size may seem excessive. Docker must download nginx image for reverse proxy, rstudio tidyverse image for rnews web service, jupyter python image for pnews web service and selenium hub image for web scraping. See `dockerfile` contents to check which packages are included.
 
 ```sh
 # run containers in detached mode
