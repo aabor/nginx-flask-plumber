@@ -7,7 +7,7 @@ Project runs two web services which exchange messages and payloads between each 
 
 `pnews` web service is written in [Python 3.x](https://www.python.org/about/) and implements [Flask microframework](http://flask.pocoo.org/) to define Web API endpoints. It can send and recieve `GET` and `POST` web requests and automate functional tests of websites through [Selenium WebDriver](https://www.seleniumhq.org/projects/webdriver/) from python using [selenium package](https://selenium-python.readthedocs.io/index.html).
 
-Web API endpoint definitions usin `Flask` synthax in `Python 3.x` language:
+Web API endpoint definitions using `Flask` synthax in `Python 3.x` language:
 
 ```py
 # Main page
