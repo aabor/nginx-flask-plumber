@@ -7,7 +7,68 @@ Project runs two web services which exchange messages and payloads between each 
 
 `pnews` web service is written in [Python 3.x](https://www.python.org/about/) and implements [Flask microframework](http://flask.pocoo.org/) to define Web API endpoints. It can send and recieve `GET` and `POST` web requests and automate functional tests of websites through [Selenium WebDriver](https://www.seleniumhq.org/projects/webdriver/) from python using [selenium package](https://selenium-python.readthedocs.io/index.html).
 
+Web API endpoint definitions usin `Flask` synthax in `Python 3.x` language:
+
+```py
+# Main page
+# curl -i http://localhost:80/pnews/
+@app.route('/')
+def flask_index():
+    app.logger.info("main page opened.")
+    return "Service pnews (language python) is ready!\r\n"
+@app.route('/text_message', methods=('POST',))
+def flask_text_message():
+    head=[]
+    try:
+        json=request.get_json()#.get('thing2')
+        df=accept_text_data(json)
+        head=df.head()
+    except:
+        msg='Bad payload'
+        app.logger.info(msg)
+        return msg
+    output = StringIO()
+    output.write(head.to_csv(index=False))
+    msg=output.getvalue()
+    output.close()    
+    app.logger.info("\r\n" + msg)
+    return jsonify('message accepted')  
+```
+
 `rnews` web service is written i R language and implements Plumber package web API functionality that is syntactically similar to Python Flask.
+
+Web API endpoints definition using `plumber` syntax in `R language`:
+
+```R
+#* Main page
+#* curl -i http://localhost:80/rnews/
+#* @get /
+function(){
+  loginfo("main page opened.", logger="rnews")
+  'Service rnews (language R) is ready!\r\n'
+}
+#* Accept text message that contains data in table format
+#* @param req request object
+#* @param res response object
+#* @post /text_message
+function(req, res){
+  loginfo('text message in POST request arrived', logger="rnews.text_message")
+  payload<-req$postBody
+  data<-accept_text_data(payload)
+  tb<-data
+  if(class(data) %in% c('xts', 'zoo')){
+    tb<-tk_tbl(data) %>% 
+      mutate(dt=as.character(index, format="%Y-%m-%d %H:%M:%S")) %>% 
+      select(-index)
+    nms<-colnames(tb)
+    nms<-c('dt', nms[-1])
+    tb<-select(tb, nms)
+  }
+  msg<-format_csv(tb)
+  loginfo(msg, logger="rnews.text_message")
+  "message accepted"
+}
+```
 
 Both services use similar logging packages [from R](http://logging.r-forge.r-project.org/) and [Python](https://docs.python.org/3/library/logging.html) respectively. All API calls are reflected in log file.
 
