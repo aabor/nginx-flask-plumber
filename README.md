@@ -104,7 +104,7 @@ test_that("POST data.frame to rnews", {
 })
 ```
 
-In this example web services can perform health check, respond to echo requests, exchange data frames in text form. Payload in `POST` requests is coded in [json format](https://www.json.org/), data frames and time series variables are converted to `csv` text memory files and then packaged in `json`.
+In this example web services can perform health check, respond to echo requests, exchange data frames in text form. Payload in `POST` requests is dumped into [json format](https://www.json.org/), data frames and time series variables are converted to `csv` text memory files and then dumped into `json`.
 
 As soon as both web service are running in docker containers, both of them are connected in one network and can make API calls by its names. Nginx reverse proxy allows access to these services from other locations via HTTP calls on `localhost` for example. Reverse proxy has its own index page with `favicon.ico`.
 
