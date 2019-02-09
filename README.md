@@ -49,9 +49,9 @@ def test_POST_df_to_pnews():
 assert r.json() == 'message accepted'
 ```
 
-`rnews` web service is written i R language and implements Plumber package web API functionality that is syntactically similar to Python Flask.
+`rnews` web service is written in `R language` and implements `Plumber` package `Web API` functionality that is syntactically similar to Python Flask.
 
-Web API endpoints definition using `plumber` syntax in `R language`:
+Web API endpoints definition using `plumber` syntax in `R language` are as following. One may want to use [`R shiny server`](https://www.rstudio.com/products/shiny/shiny-server/) or [`python bokeh`](https://bokeh.pydata.org/en/latest/) for the same purpose which are more powerful and offer many graphical user interface control elements. But if we need only RESTful API service-to-service communication then `R` `plumber` and `Python` `Flask` are better choice because of synthax simplicity.
 
 ```R
 #* Main page
