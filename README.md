@@ -35,6 +35,20 @@ def flask_text_message():
     return jsonify('message accepted')  
 ```
 
+Simple tests for above endpoints using [pytest framework](https://docs.pytest.org/en/latest/). `Pytest` allows to specify tests as top level functions, without the need to subclass unittest.TestCase class in general framework [`unittest`](https://docs.python.org/3/library/unittest.html).
+
+```py
+url="http://pnews:5000"
+def test_main_page():
+    r = requests.get(url)
+    assert r.status_code == requests.codes.ok
+assert r.text.strip() == 'Service pnews (language python) is ready!'
+def test_POST_df_to_pnews():
+    r=post_text_data(data_type="df", url="http://pnews:5000")
+    assert r.status_code == requests.codes.ok
+assert r.json() == 'message accepted'
+```
+
 `rnews` web service is written i R language and implements Plumber package web API functionality that is syntactically similar to Python Flask.
 
 Web API endpoints definition using `plumber` syntax in `R language`:
@@ -68,6 +82,26 @@ function(req, res){
   loginfo(msg, logger="rnews.text_message")
   "message accepted"
 }
+```
+
+Example of Web API tests in R, using well known `testthat` package with `JUnit` reporting.
+
+```r
+url<-"http://rnews:5000"
+context("Main page exist")
+test_that("Main page exist", {
+  resp<-GET(url)
+  expect_equal(resp$status_code, 200)
+  ctt<-content(resp) %>% unlist %>% str_squish()
+  expect_equal(ctt, "Service rnews (language R) is ready!")
+})
+context("POST data.frame to rnews")
+test_that("POST data.frame to rnews", {
+  resp<-post_text_data(data_type="df", url="http://rnews:5000")
+  expect_equal(resp$status_code, 200)
+  ctt<-content(resp) %>% unlist
+  expect_equal(ctt, 'message accepted')
+})
 ```
 
 Both services use similar logging packages [from R](http://logging.r-forge.r-project.org/) and [Python](https://docs.python.org/3/library/logging.html) respectively. All API calls are reflected in log file.
