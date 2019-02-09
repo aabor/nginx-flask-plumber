@@ -35,7 +35,7 @@ def flask_text_message():
     return jsonify('message accepted')  
 ```
 
-Simple tests for above endpoints using [pytest framework](https://docs.pytest.org/en/latest/). `Pytest` allows to specify tests as top level functions, without the need to subclass unittest.TestCase class in general framework [`unittest`](https://docs.python.org/3/library/unittest.html).
+Simple tests for above endpoints using [pytest framework](https://docs.pytest.org/en/latest/). `Pytest` allows to specify tests as top level functions, without the need to subclass `unittest.TestCase` class in general framework [`unittest`](https://docs.python.org/3/library/unittest.html).
 
 ```py
 url="http://pnews:5000"
