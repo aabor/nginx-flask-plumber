@@ -104,9 +104,7 @@ test_that("POST data.frame to rnews", {
 })
 ```
 
-Both services use similar logging packages [from R](http://logging.r-forge.r-project.org/) and [Python](https://docs.python.org/3/library/logging.html) respectively. All API calls are reflected in log file.
-
-In this example web services can perform health check, respond to echo requests, exchange data frames in text form. Payload in `POST` requests is coded in [json format](https://www.json.org/), data frames and time series variables is converted to `csv` text memory files and then packaged in `json`.
+In this example web services can perform health check, respond to echo requests, exchange data frames in text form. Payload in `POST` requests is coded in [json format](https://www.json.org/), data frames and time series variables are converted to `csv` text memory files and then packaged in `json`.
 
 As soon as both web service are running in docker containers, both of them are connected in one network and can make API calls by its names. Nginx reverse proxy allows access to these services from other locations via HTTP calls on `localhost` for example. Reverse proxy has its own index page with `favicon.ico`.
 
@@ -154,6 +152,45 @@ You can stop all running containers executing from project folder.
 
 ```sh
 docker-compose -f docker-compose.yml down
+```
+
+# Log reports
+
+Both services use similar logging packages [from R](http://logging.r-forge.r-project.org/) and [Python](https://docs.python.org/3/library/logging.html) respectively. All API calls are reflected in log file.
+
+Log initialization in `python 3.x`:
+
+```py
+from flask import Flask
+import logging
+from logging.handlers import RotatingFileHandler
+from logging import Formatter, FileHandler, StreamHandler
+
+app = Flask(__name__)
+log_file=os.path.join(work_dir, os.path.basename(work_dir) + '.log')
+os.chmod(log_file, 0o775)
+formatter = Formatter('%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)d:%(message)s', 
+                              datefmt=fh_time_format)
+handler = RotatingFileHandler(log_file, maxBytes=10000, backupCount=1)
+handler.setLevel(logging.INFO)
+handler.setFormatter(formatter)
+consoleHandler = logging.StreamHandler()
+consoleHandler.setLevel(logging.INFO)
+consoleHandler.setFormatter(formatter)
+app.logger.handlers=[]
+app.logger.addHandler(handler)
+app.logger.addHandler(consoleHandler)
+```
+
+The same log initialization in `R language`:
+
+```r
+library(logging)
+removeHandler("writeToFile")
+basicConfig()
+log_file<-str_c(basename(getwd()), ".log", sep='')
+addHandler(writeToFile, logger="", file=log_file)
+loginfo("started", logger="rnews")
 ```
 
 # Continuous Integration and Continuous Deployment
