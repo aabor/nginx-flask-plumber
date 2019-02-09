@@ -1,7 +1,7 @@
 # nginx-flask-plumber
 [Python Flask](http://flask.pocoo.org/) and [R plumber](https://www.rplumber.io/) web services that run under the reverse proxy [nginx](https://www.nginx.com/).
 
-This is small web services system demonstrate machine-to-machine interaction over a network. `The nginx-flask-plumber` project shows Continuous Integration and Continuous Deployment software development methodology on the basis of [docker containers](https://www.docker.com/get-started) and [jenkins automation server](https://jenkins.io/) as continuos integration tool. 
+This is small web services system demonstrate service-to-service interaction over a private network. `The nginx-flask-plumber` project shows Continuous Integration and Continuous Deployment software development methodology on the basis of [docker containers](https://www.docker.com/get-started) and [jenkins automation server](https://jenkins.io/) as continuos integration tool. 
 
 Project runs two web services which exchange messages and payloads between each other through [Web API](https://en.wikipedia.org/wiki/Web_API) calls in RESTful software architectural style.
 
@@ -110,7 +110,9 @@ As soon as both web service are running in docker containers, both of them are c
 
 [`Jenkinsfile`](https://jenkins.io/doc/book/pipeline/jenkinsfile/) describes all the Continuous Integration and Continuous Deployment pipeline. It checkouts repository from Github, builds new docker images, runs containers (which will be recreated if were running), perform functional tests such as health check or connectivity between web services, collect junit reports and send email to the user in case of successfull finish.
 
-Usage. This project is tested on Ubuntu 18.04 (linux). Fork or clone this repository. Install Docker and docker-compose. 
+Prerequisitives. Basic knowledge of R and python languages, docker basics (docker run, docker-compose up and down commands). This project is tested on Ubuntu 18.04 (linux).
+
+Usage. Fork or clone this repository. Install Docker and docker-compose. All running containers will be accessible only from http://localhost:80 via reverse proxy. Make sure that no one else is listening `80` port on your system.
 
 ```sh
 git clone https://github.com/aabor/nginx-flask-plumber.git
